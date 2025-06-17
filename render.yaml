@@ -2,9 +2,10 @@ services:
   - type: web
     name: inventory-system
     env: python
-    buildCommand: ""
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     plan: free
+    pythonVersion: 3.10
     envVars:
       - key: FLASK_ENV
         value: production
