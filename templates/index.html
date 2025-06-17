@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Учет Товаров</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <h1>📦 Учёт Товаров</h1>
+    </nav>
+    <div class="container">
+        <form action="/add" method="POST">
+            <input type="text" name="name" placeholder="Название" required>
+            <input type="text" name="category" placeholder="Категория" required>
+            <input type="number" name="quantity" placeholder="Кол-во" required>
+            <input type="number" name="purchase_price" step="0.01" placeholder="Цена закупки" required>
+            <input type="number" name="sale_price" step="0.01" placeholder="Цена продажи" required>
+            <button type="submit">Добавить</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Кол-во</th>
+                    <th>Закупка</th>
+                    <th>Продажа</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <form action="/edit/{{ product.id }}" method="POST">
+                        <td><input name="name" value="{{ product.name }}"></td>
+                        <td><input name="category" value="{{ product.category }}"></td>
+                        <td><input name="quantity" type="number" value="{{ product.quantity }}"></td>
+                        <td><input name="purchase_price" type="number" step="0.01" value="{{ product.purchase_price }}"></td>
+                        <td><input name="sale_price" type="number" step="0.01" value="{{ product.sale_price }}"></td>
+                        <td>
+                            <button type="submit">💾</button>
+                            <a href="/delete/{{ product.id }}">❌</a>
+                        </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
